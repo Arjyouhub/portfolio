@@ -38,7 +38,7 @@ header{
     padding: 2rem 9%;
     background-color: var(--bg-color);
     display:flex ;
-    justify-content:space-between ;
+    justify-content:space-around;
     align-items: center;
     z-index: 100;
 }
@@ -316,11 +316,12 @@ span{
 }
 .footer{
     display: flex;
-    justify-content: space-between;
+    justify-content:center;
     align-content: center;
     flex-wrap: wrap;
     padding:2rem;
     background: var(--snd-bg-color);
+    position: relative;
 
 }
 .footer-text{
@@ -334,6 +335,9 @@ span{
     background: var(--main-color);
     border-radius: .8rem;
     transition: .5s ease;
+    position: absolute;
+    right: 5%;
+    margin-left: 10px;
 }
 .footer-iconTop a:hover{
     box-shadow: 0 0,1rem var(--main-color);
@@ -438,7 +442,10 @@ span{
         width: 80vw;
         margin-top: 4rem;
     }
-
+ .footer-iconTop{
+    position: static;
+   
+ }
 }
 @media(max-width:450px){
     html{
