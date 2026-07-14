@@ -526,7 +526,7 @@ header.sticky {
 /* Skills Section */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
 
@@ -667,7 +667,7 @@ header.sticky {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
 
@@ -980,12 +980,27 @@ footer {
   }
   
   .hero-title {
-    font-size: 2.8rem;
+    font-size: 2.4rem;
   }
   
   .hero-subtitle {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     justify-content: center;
+    height: auto;
+    min-height: 2.8rem;
+  }
+  
+  .section-title {
+    font-size: 2.1rem;
+  }
+
+  .floating-badge {
+    display: none !important;
+  }
+  
+  .about-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
   
   .menu-toggle {
@@ -1049,6 +1064,11 @@ footer {
     width: 290px;
     height: 370px;
     border-radius: 20px;
+  }
+
+  .btn {
+    padding: 0.7rem 1.6rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -1172,4 +1192,64 @@ footer {
 }
 .typed-text.fade-out {
   opacity: 0;
+}
+
+/* Extra narrow mobile styling */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1.2rem;
+  }
+  .hero-title {
+    font-size: 2.0rem;
+  }
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 290px;
+    margin: 0 auto 3rem auto;
+    gap: 1rem;
+  }
+  .hero-buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero-image-border {
+    width: 240px;
+    height: 310px;
+  }
+  .hero-image-bg {
+    width: 270px;
+    height: 340px;
+  }
+  .stat-item {
+    padding: 0.9rem;
+  }
+  .section-title {
+    font-size: 1.8rem;
+  }
+  .projects-filter {
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .filter-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  .skill-category {
+    padding: 1.2rem;
+  }
+  .contact-form-panel button[type="submit"] {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Hide header overlay during welcome sequence */
+header.header-hidden {
+  opacity: 0;
+  pointer-events: none;
 }

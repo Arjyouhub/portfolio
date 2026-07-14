@@ -241,9 +241,9 @@ export default function App() {
     <SmoothScroll>
       {showIntro && <LaptopIntro onComplete={handleIntroComplete} />}
       {!showIntro && <CinematicBackground />}
-      <div className={`portfolio-container-wrapper ${showIntro ? 'intro-active' : 'intro-fade-in'}`}>
-      {/* Header / Navbar */}
-      <header className={isSticky ? 'sticky' : ''}>
+      
+      {/* Header / Navbar placed outside transform wrapper for true viewport-fixed positioning */}
+      <header className={`${isSticky ? 'sticky' : ''} ${showIntro ? 'header-hidden' : ''}`}>
         <div className="container header-container">
           <a href="#home" className="logo">
             Arjun <span>Chandran</span>
@@ -279,6 +279,7 @@ export default function App() {
         </div>
       </header>
 
+      <div className={`portfolio-container-wrapper ${showIntro ? 'intro-active' : 'intro-fade-in'}`}>
       {/* Hero Section */}
       <section className="hero" id="home">
         <div className="container hero-grid">
@@ -370,7 +371,7 @@ export default function App() {
             <div className="about-text">
               <h3>Transforming designs into clean, responsive web experiences.</h3>
               <p>
-                As an enthusiastic MERN Stack Developer (Fresher), I love bringing designs to life and building interactive web applications. I have built a solid foundation in React, Node.js, Express, and MongoDB by studying modern web patterns and building hands-on projects, focusing on neat code and mobile-friendly layouts.
+                As an enthusiastic MERN Stack Developer, I love bringing designs to life and building interactive web applications. I have built a solid foundation in React, Node.js, Express, and MongoDB by studying modern web patterns and building hands-on projects, focusing on neat code and mobile-friendly layouts.
               </p>
               <p>
                 I am constantly learning new concepts, frontend designs, and server management. I am eager to join a team where I can apply my skills, learn from experienced developers, and contribute to building meaningful applications.
