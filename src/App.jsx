@@ -58,22 +58,44 @@ export default function App() {
   // Form submission state
   const [formStatus, setFormStatus] = useState({ submitted: false, error: false });
 
-  // Cinematic fade text rotation
+  // Typewriter text rotation
   const words = ['Full-Stack MERN Developer', 'React Developer', 'Ethical Hacker'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [fadeState, setFadeState] = useState('fade-in');
+  const [displayedText, setDisplayedText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setFadeState('fade-out');
-      setTimeout(() => {
-        setCurrentWordIndex((prev) => (prev + 1) % words.length);
-        setFadeState('fade-in');
-      }, 800);
-    }, 4500);
+    let timer;
+    const currentWord = words[currentWordIndex];
+    
+    // Typing speeds
+    const typeSpeed = isDeleting ? 40 : 85;
+    
+    const handleType = () => {
+      if (!isDeleting) {
+        setDisplayedText(currentWord.slice(0, displayedText.length + 1));
+        
+        if (displayedText.length === currentWord.length) {
+          // Pause at full word before deleting
+          timer = setTimeout(() => setIsDeleting(true), 2000);
+          return;
+        }
+      } else {
+        setDisplayedText(currentWord.slice(0, displayedText.length - 1));
+        
+        if (displayedText.length === 0) {
+          setIsDeleting(false);
+          setCurrentWordIndex((prev) => (prev + 1) % words.length);
+          return;
+        }
+      }
+      
+      timer = setTimeout(handleType, typeSpeed);
+    };
 
-    return () => clearInterval(interval);
-  }, []);
+    timer = setTimeout(handleType, typeSpeed);
+    return () => clearTimeout(timer);
+  }, [displayedText, isDeleting, currentWordIndex]);
 
   // Handle scroll events for sticky nav and active section spy
   useEffect(() => {
@@ -269,7 +291,7 @@ export default function App() {
               <span className="name">Arjun Chandran</span>
             </h1>
             <div className="hero-subtitle">
-              And I'm a <span className={`typed-text ${fadeState}`}>{words[currentWordIndex]}</span>
+              And I'm a <span className="typed-text">{displayedText}</span>
             </div>
             <p className="hero-desc">
               A self-taught Full-Stack MERN Developer with a passion for architecting clean, secure, and responsive web systems. I engineer pixel-perfect frontends combined with scalable APIs and database logic.
@@ -589,7 +611,7 @@ export default function App() {
                 </div>
                 <div className="contact-info-details">
                   <p>Email Me</p>
-                  <p>arjyou44@gmail.com</p>
+                  <p>arjyouhub@gmail.com</p>
                 </div>
               </div>
 
@@ -599,7 +621,7 @@ export default function App() {
                 </div>
                 <div className="contact-info-details">
                   <p>My Location</p>
-                  <p>Kerala, India</p>
+                  <p>Calicut, Kerala</p>
                 </div>
               </div>
 
