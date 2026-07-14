@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import SmoothScroll from './SmoothScroll';
 import LaptopIntro from './LaptopIntro';
+import MobileIntro from './MobileIntro';
 import CinematicBackground from './CinematicBackground';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -31,15 +32,30 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [isSticky, setIsSticky] = useState(false);
 
-  // Cinematic 3D Laptop Intro State
+  // Cinematic 3D Intro State
   const [showIntro, setShowIntro] = useState(() => {
     if (typeof window !== 'undefined') {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const isMobile = window.innerWidth < 768;
-      return !prefersReducedMotion && !isMobile;
+      return !prefersReducedMotion;
     }
     return false;
   });
+
+  // Track if we are on a mobile screen dynamically
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleIntroComplete = useCallback(() => {
     console.log('App: handleIntroComplete invoked. Setting showIntro to false.');
@@ -239,7 +255,13 @@ export default function App() {
 
   return (
     <SmoothScroll>
-      {showIntro && <LaptopIntro onComplete={handleIntroComplete} />}
+      {showIntro && (
+        isMobile ? (
+          <MobileIntro onComplete={handleIntroComplete} />
+        ) : (
+          <LaptopIntro onComplete={handleIntroComplete} />
+        )
+      )}
       {!showIntro && <CinematicBackground />}
       
       {/* Header / Navbar placed outside transform wrapper for true viewport-fixed positioning */}
