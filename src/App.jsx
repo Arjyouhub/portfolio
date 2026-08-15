@@ -18,8 +18,6 @@ import {
   MessageSquare
 } from 'lucide-react';
 import SmoothScroll from './SmoothScroll';
-import LaptopIntro from './LaptopIntro';
-import MobileIntro from './MobileIntro';
 import CinematicBackground from './CinematicBackground';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -31,15 +29,6 @@ export default function App() {
   const [menuActive, setMenuActive] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isSticky, setIsSticky] = useState(false);
-
-  // Cinematic 3D Intro State
-  const [showIntro, setShowIntro] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      return !prefersReducedMotion;
-    }
-    return false;
-  });
 
   // Track if we are on a mobile screen dynamically
   const [isMobile, setIsMobile] = useState(() => {
@@ -55,11 +44,6 @@ export default function App() {
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const handleIntroComplete = useCallback(() => {
-    console.log('App: handleIntroComplete invoked. Setting showIntro to false.');
-    setShowIntro(false);
   }, []);
 
 
@@ -142,8 +126,6 @@ export default function App() {
 
   // GSAP ScrollTrigger Section Transitions (Subtle Depth & Parallax sways)
   useEffect(() => {
-    if (showIntro) return;
-
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
@@ -173,7 +155,7 @@ export default function App() {
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
-  }, [showIntro]);
+  }, []);
 
   // Project List
   const projects = [
@@ -255,17 +237,10 @@ export default function App() {
 
   return (
     <SmoothScroll>
-      {showIntro && (
-        isMobile ? (
-          <MobileIntro onComplete={handleIntroComplete} />
-        ) : (
-          <LaptopIntro onComplete={handleIntroComplete} />
-        )
-      )}
-      {!showIntro && <CinematicBackground />}
+      <CinematicBackground />
       
       {/* Header / Navbar placed outside transform wrapper for true viewport-fixed positioning */}
-      <header className={`${isSticky ? 'sticky' : ''} ${showIntro ? 'header-hidden' : ''}`}>
+      <header className={isSticky ? 'sticky' : ''}>
         <div className="container header-container">
           <a href="#home" className="logo">
             Arjun <span>Chandran</span>
@@ -301,7 +276,7 @@ export default function App() {
         </div>
       </header>
 
-      <div className={`portfolio-container-wrapper ${showIntro ? 'intro-active' : 'intro-fade-in'}`}>
+      <div className="portfolio-container-wrapper">
       {/* Hero Section */}
       <section className="hero" id="home">
         <div className="container hero-grid">
